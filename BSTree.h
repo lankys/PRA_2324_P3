@@ -12,9 +12,9 @@ class BSTree {
        BSNode<T>* root;
        
     public:
-        BStree(){
+        BSTree(){
             nelem = 0;
-            root = nullptr
+            root = nullptr;
         }
         int size() const {
             return nelem;
@@ -22,9 +22,8 @@ class BSTree {
         }
 
         T search(T e) const {
-            BSNode<T> nodo = search(root, e);
+            BSNode<T>* nodo = search(root, e);
             return nodo->elem;
-        
         }
         T operator[](T e) const {
             return search(e);
@@ -61,7 +60,7 @@ class BSTree {
 
         BSNode<T>* insert(BSNode<T>* n, T e) {
             if (n == nullptr) {
-                elem++;
+                nelem++;
                 return new BSNode<T>(e);
             }else if (n->elem == e) {
                 throw std::runtime_error("El elemento ya se esta dentro del arbol");
@@ -90,7 +89,7 @@ class BSTree {
                  else{
                     n = n->right;
                  }
-                elem--;}
+                nelem--;}
             }
          return n;}
 
@@ -116,7 +115,7 @@ class BSTree {
             else if (n->left != nullptr && n->right == nullptr) {
                 delete_cascade(n->left);
             }
-            elem--;
+            nelem--;
             return delete n;
         }
         T max(BSNode<T>* n)const {
@@ -134,7 +133,7 @@ class BSTree {
             if (n->right == nullptr) {
                 BSNode<T>* aux = n->left;
                 delete n;
-                elem--;
+                nelem--;
                 return aux;
             }
             n->right = remove_max(n->right);
