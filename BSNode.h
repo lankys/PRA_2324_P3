@@ -6,7 +6,20 @@
 template <typename T> 
 class BSNode {
     public:
-        // miembros públicos
+        T elem;
+	BSNode<T>* left;
+	BSNode<T>* right;
+	BSNode(T elem, BSNode<T>* left = nullptr, BSNode<T>* right = nullptr){
+		this->elem = elem;
+		this->left = nullptr;
+		this->right = nullptr;
+
+
+	}
+	friend std::ostream& operator<<(std::ostream& out, const BSNode<T>& bsn){
+		out << bsn.elem << std::endl;
+		return out;
+	}
     
 };
 
