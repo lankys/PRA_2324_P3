@@ -16,12 +16,10 @@ class TableEntry {
 
 	    TableEntry(std::string key){
 			this->key = key;
-			value = 0;
 	    }
 
 		TableEntry(){
 			key = "";
-			value = 0;
 	   }
 
 	friend bool operator==(const TableEntry<V> &te1, const TableEntry<V> &te2){

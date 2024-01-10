@@ -14,23 +14,24 @@ class HashTable: public Dict<V> {
     private:
 
         int n;
-	int max;
-	ListLinked<TableEntry<V>>* table;
-    int h(std::string key){
-        int acum = 0;
-        for (int i = 0; i < key.length(); i++){
-         acum +=int(key.at(i));
+	    int max;
+	    ListLinked<TableEntry<V>>* table;
+        int h(std::string key){
+            int acum = 0;
+            for (int i = 0; i < key.length(); i++){
+                acum +=int(key.at(i));
 
-        }
-        return acum% max;
-    }
+                }
+            return acum% max;
+            }
     
 
     public:
         HashTable(int size){
-            table = new ListLinked<TableEntry<V>>[max];
+           
             n = 0;
             max = size;
+            table = new ListLinked<TableEntry<V>>[size];
         }
 
 
@@ -44,14 +45,18 @@ class HashTable: public Dict<V> {
 
 
         friend std::ostream& operator<<(std::ostream& out, const HashTable<V>& th){
+            out << "HashTable( entries: " << th.n << " Capacidad: " << th.max << ")" << std::endl;
             for (int i = 0; i < th.max; i++){
-                out << "cubeta" << i << "elementos:";
-                for (int j = 0; j < th.table[i].n; j++){
-                    out << " " << j << th.table[i] << std::endl;
+                out << "cubeta " << i << "elementos ["<< std::endl;
+                for (int j = 0; j < th.table[i].size(); j++) {
+                    out << "(" << th.table[i].get(j) << ")" << std::endl;
                 }
+                out << "]" << std::endl;
             }
             return out;
             }
+       
+        
       
         V operator[](std::string key){
                 return search(key);
@@ -62,11 +67,11 @@ class HashTable: public Dict<V> {
             TableEntry<V> i(key, value); 
             //miramos si el elemento esta dentro de la tabla hash
             //para esto usamos el operador [] nos ubica en la cubeta  del cifrado de key,con el search buscamos  si el elemento esta en la cubeta
-            if (table[h(key)].search(key) != -1){ 
+            if (table[h(key)].search(key) != -1){
                 throw std::runtime_error(" elemento incluido");
             }
-            else{
-		    table[h(key)].prepend(i);
+            else {
+                table[h(key)].prepend(i);
                 //si no esta en la cubeta lo meto con un prepend
             }
             n++;//aumento el numero de el
@@ -91,9 +96,13 @@ class HashTable: public Dict<V> {
             n--;
             return valor.value;
         }
+        
 
+        int entries() override {
+            return n;
+        }
 
-
+      
 };
 
 #endif
